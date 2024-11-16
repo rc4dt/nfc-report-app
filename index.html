@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NFC Report App</title>
     <link rel="stylesheet" href="style.css">
+    <title>Submit Report</title>
 </head>
 <body>
     <div class="container">
-        <h1>Submit a Report</h1>
-        <p id="room-info">Room: <span id="roomId"></span></p>
-        <p id="date-info">Date: <span id="current-date"></span></p>
-        
+        <h1>Report Submission</h1>
+        <p>Room ID: <span id="room-id"></span></p>
+        <p>Date: <span id="current-date"></span></p>
         <form id="report-form">
-            <input type="text" id="user-name" placeholder="Your Name" required>
-            <textarea id="report-text" placeholder="Enter your report..." required></textarea>
-            <button type="submit">Submit Report</button>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="report">Report:</label>
+            <textarea id="report" name="report" required></textarea>
+            <button type="submit">Submit</button>
         </form>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
