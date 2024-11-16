@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const name = document.getElementById('name').value;
             const report = document.getElementById('report').value;
 
-            await fetch('https://your-api-endpoint.amazonaws.com/submit-report', {
+            await fetch('https://twigxzql5bhy7i3qn4ysjl7nvm.appsync-api.us-east-1.amazonaws.com/graphql', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ roomId, date: currentDate, name, report })
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const date = document.getElementById('date').value;
 
-            const response = await fetch(`https://your-api-endpoint.amazonaws.com/get-reports?date=${date}`);
+            const response = await fetch(`https://twigxzql5bhy7i3qn4ysjl7nvm.appsync-api.us-east-1.amazonaws.com/graphql`);
             const reports = await response.json();
 
             const reportsDiv = document.getElementById('reports');
