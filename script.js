@@ -1,45 +1,46 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const roomId = urlParams.get('roomId');
-    const roomIdElement = document.getElementById('roomId');
-    const dateElement = document.getElementById('current-date');
-    const form = document.getElementById('report-form');
+document.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const roomId = params.get('roomId');
+    const currentDate = new Date().toISOString().split('T')[0];
 
-    // Set the roomId and current date
-    roomIdElement.textContent = roomId;
-    dateElement.textContent = new Date().toLocaleDateString();
+    if (document.getElementById('room-id')) {
+        document.getElementById('room-id').textContent = roomId || 'Unknown';
+        document.getElementById('current-date').textContent = currentDate;
+    }
 
-    // Handle form submission
-    form.addEventListener('submit', function (event) {
-        event.preventDefault();
+    if (document.getElementById('report-form')) {
+        document.getElementById('report-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const report = document.getElementById('report').value;
 
-        const userName = document.getElementById('user-name').value;
-        const reportText = document.getElementById('report-text').value;
-        const date = new Date().toLocaleDateString();
+            await fetch('https://your-api-endpoint.amazonaws.com/submit-report', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ roomId, date: currentDate, name, report })
+            });
 
-        // Construct the report object
-        const report = {
-            roomId,
-            date,
-            userName,
-            reportText
-        };
-
-        // Save the report to Firebase (make sure Firebase is set up and linked in Firebase Console)
-        fetch('https://your-firebase-function-url/submit-report', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(report)
-        })
-        .then(response => response.json())
-        .then(data => {
             alert('Report submitted successfully!');
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Failed to submit the report');
+            e.target.reset();
         });
-    });
+    }
+
+    if (document.getElementById('find-form')) {
+        document.getElementById('find-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const date = document.getElementById('date').value;
+
+            const response = await fetch(`https://your-api-endpoint.amazonaws.com/get-reports?date=${date}`);
+            const reports = await response.json();
+
+            const reportsDiv = document.getElementById('reports');
+            reportsDiv.innerHTML = '<h2>Reports:</h2>' + reports.map(report => `
+                <div class="report">
+                    <p><strong>Room ID:</strong> ${report.roomId}</p>
+                    <p><strong>Name:</strong> ${report.name}</p>
+                    <p><strong>Report:</strong> ${report.report}</p>
+                </div>
+            `).join('');
+        });
+    }
 });
