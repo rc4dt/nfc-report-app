@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFC Report App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Submit a Report</h1>
+        <p id="room-info">Room: <span id="roomId"></span></p>
+        <p id="date-info">Date: <span id="current-date"></span></p>
+        
+        <form id="report-form">
+            <input type="text" id="user-name" placeholder="Your Name" required>
+            <textarea id="report-text" placeholder="Enter your report..." required></textarea>
+            <button type="submit">Submit Report</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
